@@ -20,7 +20,7 @@
   opacity: 0.35;
 }
 
-/* Remove all gradient overlays that block the matrix rain */
+/* Remove all gradient overlays and section backgrounds that block the matrix rain */
 .theme-matrix .theme-matrix-hide,
 .theme-matrix .auth-gradient-light,
 .theme-matrix .auth-gradient-dark,
@@ -29,4 +29,35 @@
 .theme-matrix .site-gradient-bottom,
 .theme-matrix .site-gradient-bottom-dark {
   display: none !important;
+}
+
+/* Remove card shadows on plans */
+.theme-matrix .plan-card-matrix {
+  box-shadow: none !important;
+}
+
+/* Make ALL sections transparent so matrix rain shows through entire page */
+.theme-matrix section {
+  background: transparent !important;
+}
+
+/* Remove section internal gradient overlays and decorative blurs */
+.theme-matrix section > .absolute {
+  display: none !important;
+}
+
+/* Footer fully transparent */
+.theme-matrix footer {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* Keep top menu opaque so it stays readable */
+.theme-matrix header.sticky {
+  background: hsl(0 0% 100% / 0.95) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.theme-matrix.dark header.sticky {
+  background: hsl(0 0% 7% / 0.95) !important;
 }
