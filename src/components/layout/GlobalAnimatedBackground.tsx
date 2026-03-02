@@ -16,7 +16,7 @@ const GlobalAnimatedBackground = ({
 }: GlobalAnimatedBackgroundProps) => {
   const { currentVisualTheme } = useSiteTheme();
 
-  // Se o tema é matrix, mostrar chuva de caracteres em vez das bolas animadas
+  // Matrix theme: show character rain instead of blobs
   if (currentVisualTheme === 'matrix') {
     return <MatrixRainBackground />;
   }
