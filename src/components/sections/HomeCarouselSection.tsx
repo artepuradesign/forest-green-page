@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FileSearch, ShieldCheck, Zap } from "lucide-react";
+import { FileSearch, ShieldCheck, Zap, Search, FileText, Users, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useSiteTheme } from "@/contexts/SiteThemeContext";
 
 import slide01 from "@/assets/home-carousel-01.jpg";
 import slide02 from "@/assets/home-carousel-02.jpg";
@@ -31,8 +32,17 @@ type Benefit = {
   description: string;
 };
 
+const matrixFeatures = [
+  { icon: Search, title: 'Consultas CPF/CNPJ', desc: 'Dados completos em segundos com alta taxa de acerto' },
+  { icon: FileText, title: 'Painéis Personalizados', desc: 'Administração, estoque, vendas e relatórios em um só lugar' },
+  { icon: Users, title: 'Multi-usuários', desc: 'Gerencie equipes com permissões e controle de acesso' },
+  { icon: TrendingUp, title: 'API Integrada', desc: 'Integre dados diretamente nos seus sistemas via API REST' },
+];
+
 const HomeCarouselSection: React.FC = () => {
   const navigate = useNavigate();
+  const { currentVisualTheme } = useSiteTheme();
+  const isMatrix = currentVisualTheme === 'matrix';
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [active, setActive] = useState(0);
 
@@ -99,6 +109,99 @@ const HomeCarouselSection: React.FC = () => {
     };
   }, [api]);
 
+  // ===== MATRIX THEME: no images, centered text with full description =====
+  if (isMatrix) {
+    return (
+      <section aria-label="Destaques" className="w-full">
+        <div className="relative w-full overflow-hidden bg-transparent">
+          <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
+            <div className="flex flex-col items-center justify-center py-20 sm:py-28 lg:py-32 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="w-full"
+              >
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-3">
+                  Plataforma de consultas
+                </p>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight tracking-tight mb-6 text-foreground dark:text-green-400">
+                  <span className="dark:drop-shadow-[0_0_20px_rgba(0,255,65,0.3)]">
+                    API Painel
+                  </span>
+                  <br />
+                  <span className="text-3xl sm:text-4xl lg:text-5xl text-muted-foreground dark:text-green-300/80">
+                    Consultas + Ferramentas para Seu Negócio
+                  </span>
+                </h1>
+
+                <p className="text-lg sm:text-xl text-muted-foreground dark:text-green-200/70 leading-relaxed mb-10 max-w-2xl mx-auto">
+                  De CPF em segundos a painéis completos: administração, estoque, vendas e mais.
+                  Tudo em um lugar, com segurança e velocidade.
+                </p>
+
+                {/* Benefits */}
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-10 justify-center">
+                  {benefits.map((b, i) => (
+                    <div key={i} className="flex items-center gap-3 justify-center">
+                      <div className="h-10 w-10 rounded-full bg-muted dark:bg-green-900/30 ring-1 ring-border dark:ring-green-500/30 flex items-center justify-center flex-shrink-0">
+                        {b.icon}
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-foreground dark:text-green-300 leading-none">{b.title}</p>
+                        <p className="text-xs text-muted-foreground dark:text-green-400/60 mt-0.5">{b.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Features grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto">
+                  {matrixFeatures.map((f) => (
+                    <motion.div
+                      key={f.title}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.3 }}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-background/5 dark:bg-green-900/10 border border-border/30 dark:border-green-500/15 text-left"
+                    >
+                      <f.icon className="h-5 w-5 text-muted-foreground dark:text-green-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-semibold text-foreground dark:text-green-300">{f.title}</p>
+                        <p className="text-xs text-muted-foreground dark:text-green-400/50 mt-1">{f.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button
+                    size="lg"
+                    className="font-semibold text-base px-8"
+                    onClick={() => navigate('/registration')}
+                  >
+                    Testar grátis (10 consultas)
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="font-semibold text-base px-8"
+                    onClick={() => navigate('/planos-publicos')}
+                  >
+                    Ver planos
+                  </Button>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ===== DEFAULT THEME: carousel with images =====
   return (
     <section aria-label="Destaques" className="w-full">
       <div className="relative w-full overflow-hidden">
@@ -144,16 +247,15 @@ const HomeCarouselSection: React.FC = () => {
                       "
                     />
 
-                    {/* Overlay mobile (mantido apenas para mobile) */}
+                    {/* Overlay mobile */}
                     <div className="absolute inset-0 z-[1] sm:hidden bg-gradient-to-r from-background/85 via-background/40 to-transparent" />
                   </div>
 
-                  {/* Conteúdo de texto (ficará por cima, sem ser afetado pelo gradiente) */}
+                  {/* Conteúdo de texto */}
                   <div className="absolute inset-0 z-[2] pointer-events-none">
                     <div className="container mx-auto px-4 sm:px-6 max-w-6xl h-full pointer-events-auto">
                       <div className="h-full flex items-end sm:items-center pb-16 sm:pb-0 py-10 sm:py-12">
                         <div className="w-full sm:max-w-xl text-center sm:text-left">
-                          {/* Card mobile com fundo */}
                           <div className="mx-auto sm:mx-0 max-w-[520px] rounded-xl bg-background/55 backdrop-blur-md ring-1 ring-border/60 p-4 sm:p-0 sm:rounded-none sm:bg-transparent sm:backdrop-blur-0 sm:ring-0">
                             <motion.p
                               initial={{ opacity: 0, y: 10 }}
@@ -246,7 +348,6 @@ const HomeCarouselSection: React.FC = () => {
           </div>
         </Carousel>
       </div>
-
     </section>
   );
 };
