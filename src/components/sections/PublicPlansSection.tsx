@@ -259,7 +259,7 @@ const PublicPlansSection = () => {
           className="h-full"
         >
           <div
-            className={`relative rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-500 ${
+            className={`relative rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-500 plan-card-matrix ${
               isCurrent 
                 ? 'ring-2 ring-primary shadow-2xl shadow-primary/20' 
                 : plan.is_popular 
