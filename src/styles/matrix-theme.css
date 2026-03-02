@@ -97,10 +97,7 @@
   --tw-gradient-from: rgba(0, 255, 65, 0.05) !important;
 }
 
-/* Dashboard active button */
-.theme-matrix.dark .from-brand-purple.to-purple-600.text-white {
-  background: linear-gradient(to right, #00aa2a, #00dd38) !important;
-}
+/* Dashboard active button – already handled by .from-brand-purple.to-purple-600 above */
 
 /* Hover states */
 .theme-matrix.dark .hover\:text-brand-purple:hover,
