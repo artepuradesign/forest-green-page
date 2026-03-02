@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FileSearch, ShieldCheck, Zap, Search, FileText, Users, TrendingUp } from "lucide-react";
+import { FileSearch, ShieldCheck, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSiteTheme } from "@/contexts/SiteThemeContext";
 
@@ -31,13 +31,6 @@ type Benefit = {
   title: string;
   description: string;
 };
-
-const matrixFeatures = [
-  { icon: Search, title: 'Consultas CPF/CNPJ', desc: 'Dados completos em segundos com alta taxa de acerto' },
-  { icon: FileText, title: 'Painéis Personalizados', desc: 'Administração, estoque, vendas e relatórios em um só lugar' },
-  { icon: Users, title: 'Multi-usuários', desc: 'Gerencie equipes com permissões e controle de acesso' },
-  { icon: TrendingUp, title: 'API Integrada', desc: 'Integre dados diretamente nos seus sistemas via API REST' },
-];
 
 const HomeCarouselSection: React.FC = () => {
   const navigate = useNavigate();
@@ -95,121 +88,19 @@ const HomeCarouselSection: React.FC = () => {
 
   React.useEffect(() => {
     if (!api) return;
-
-    const onSelect = () => {
-      setActive(api.selectedScrollSnap());
-    };
-
+    const onSelect = () => setActive(api.selectedScrollSnap());
     onSelect();
     api.on("select", onSelect);
     api.on("reInit", onSelect);
-
-    return () => {
-      api.off("select", onSelect);
-    };
+    return () => { api.off("select", onSelect); };
   }, [api]);
 
-  // ===== MATRIX THEME: no images, centered text with full description =====
-  if (isMatrix) {
-    return (
-      <section aria-label="Destaques" className="w-full">
-        <div className="relative w-full overflow-hidden bg-transparent">
-          <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
-            <div className="flex flex-col items-center justify-center py-20 sm:py-28 lg:py-32 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="w-full"
-              >
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-3">
-                  Plataforma de consultas
-                </p>
-
-                <h1 className="text-4xl sm:text-5xl lg:text-[64px] font-bold leading-tight tracking-tight mb-6 text-foreground dark:text-green-400">
-                  <span className="dark:drop-shadow-[0_0_20px_rgba(0,255,65,0.3)]">
-                    API Painel
-                  </span>
-                  <br />
-                  <span className="text-3xl sm:text-4xl lg:text-5xl text-muted-foreground dark:text-green-300/80">
-                    Consultas + Ferramentas para Seu Negócio
-                  </span>
-                </h1>
-
-                <p className="text-lg sm:text-xl text-muted-foreground dark:text-green-200/70 leading-relaxed mb-10 max-w-2xl mx-auto">
-                  De CPF em segundos a painéis completos: administração, estoque, vendas e mais.
-                  Tudo em um lugar, com segurança e velocidade.
-                </p>
-
-                {/* Benefits */}
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-10 justify-center">
-                  {benefits.map((b, i) => (
-                    <div key={i} className="flex items-center gap-3 justify-center">
-                      <div className="h-10 w-10 rounded-full bg-muted dark:bg-green-900/30 ring-1 ring-border dark:ring-green-500/30 flex items-center justify-center flex-shrink-0">
-                        {b.icon}
-                      </div>
-                      <div className="text-left">
-                        <p className="text-sm font-semibold text-foreground dark:text-green-300 leading-none">{b.title}</p>
-                        <p className="text-xs text-muted-foreground dark:text-green-400/60 mt-0.5">{b.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Features grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto">
-                  {matrixFeatures.map((f) => (
-                    <motion.div
-                      key={f.title}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.3 }}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-background/5 dark:bg-green-900/10 border border-border/30 dark:border-green-500/15 text-left"
-                    >
-                      <f.icon className="h-5 w-5 text-muted-foreground dark:text-green-400 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-semibold text-foreground dark:text-green-300">{f.title}</p>
-                        <p className="text-xs text-muted-foreground dark:text-green-400/50 mt-1">{f.desc}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* CTAs */}
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button
-                    size="lg"
-                    className="font-semibold text-base px-8"
-                    onClick={() => navigate('/registration')}
-                  >
-                    Testar grátis (10 consultas)
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="font-semibold text-base px-8"
-                    onClick={() => navigate('/planos-publicos')}
-                  >
-                    Ver planos
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // ===== DEFAULT THEME: carousel with images =====
   return (
     <section aria-label="Destaques" className="w-full">
       <div className="relative w-full overflow-hidden">
         <Carousel
           setApi={setApi}
-          opts={{
-            loop: true,
-          }}
+          opts={{ loop: true }}
           plugins={[
             Autoplay({
               delay: 6500,
@@ -223,40 +114,56 @@ const HomeCarouselSection: React.FC = () => {
             {slides.map((slide, idx) => (
               <CarouselItem key={idx} className="pl-0">
                 <div className="relative w-full">
-                  {/* Imagem + gradiente SOMENTE sobre ela */}
                   <div className="relative">
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      className={cn(
-                        "w-full object-cover",
-                        "h-[420px] sm:h-[380px] lg:h-[460px]",
-                        "select-none"
-                      )}
-                    />
+                    {/* Image: hidden in matrix theme */}
+                    {!isMatrix && (
+                      <img
+                        src={slide.image}
+                        alt={slide.title}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        className={cn(
+                          "w-full object-cover",
+                          "h-[420px] sm:h-[380px] lg:h-[460px]",
+                          "select-none"
+                        )}
+                      />
+                    )}
 
-                    {/* Gradiente apenas na imagem (esquerda → direita) */}
-                    <div
-                      className="
-                        absolute inset-0 z-[1] 
-                        hidden sm:block 
-                        bg-gradient-to-r 
-                        from-white/85 via-white/45 to-transparent 
-                        dark:from-background/95 dark:via-background/60 dark:to-transparent
-                      "
-                    />
+                    {/* Spacer when no image (matrix) */}
+                    {isMatrix && (
+                      <div className="w-full h-[420px] sm:h-[380px] lg:h-[460px]" />
+                    )}
 
-                    {/* Overlay mobile */}
-                    <div className="absolute inset-0 z-[1] sm:hidden bg-gradient-to-r from-background/85 via-background/40 to-transparent" />
+                    {/* Gradients: hidden in matrix theme */}
+                    {!isMatrix && (
+                      <>
+                        <div className="absolute inset-0 z-[1] hidden sm:block bg-gradient-to-r from-white/85 via-white/45 to-transparent dark:from-background/95 dark:via-background/60 dark:to-transparent" />
+                        <div className="absolute inset-0 z-[1] sm:hidden bg-gradient-to-r from-background/85 via-background/40 to-transparent" />
+                      </>
+                    )}
                   </div>
 
-                  {/* Conteúdo de texto */}
+                  {/* Text content */}
                   <div className="absolute inset-0 z-[2] pointer-events-none">
                     <div className="container mx-auto px-4 sm:px-6 max-w-6xl h-full pointer-events-auto">
-                      <div className="h-full flex items-end sm:items-center pb-16 sm:pb-0 py-10 sm:py-12">
-                        <div className="w-full sm:max-w-xl text-center sm:text-left">
-                          <div className="mx-auto sm:mx-0 max-w-[520px] rounded-xl bg-background/55 backdrop-blur-md ring-1 ring-border/60 p-4 sm:p-0 sm:rounded-none sm:bg-transparent sm:backdrop-blur-0 sm:ring-0">
+                      <div className={cn(
+                        "h-full flex py-10 sm:py-12",
+                        isMatrix
+                          ? "items-center justify-center"
+                          : "items-end sm:items-center pb-16 sm:pb-0"
+                      )}>
+                        <div className={cn(
+                          "w-full",
+                          isMatrix
+                            ? "max-w-2xl text-center"
+                            : "sm:max-w-xl text-center sm:text-left"
+                        )}>
+                          <div className={cn(
+                            "mx-auto max-w-[520px]",
+                            isMatrix
+                              ? "sm:max-w-2xl"
+                              : "sm:mx-0 rounded-xl bg-background/55 backdrop-blur-md ring-1 ring-border/60 p-4 sm:p-0 sm:rounded-none sm:bg-transparent sm:backdrop-blur-0 sm:ring-0"
+                          )}>
                             <motion.p
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -286,16 +193,19 @@ const HomeCarouselSection: React.FC = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -8 }}
                                 transition={{ duration: 0.35, delay: 0.05 }}
-                                className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-[42ch] mx-auto sm:mx-0 hidden sm:block"
+                                className={cn(
+                                  "mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-[42ch] mx-auto",
+                                  isMatrix ? "" : "sm:mx-0 hidden sm:block"
+                                )}
                               >
                                 {slide.subtitle}
                               </motion.p>
                             </AnimatePresence>
 
-                            <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row flex-wrap gap-2">
+                            <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row flex-wrap gap-2 justify-center sm:justify-start">
                               <Button
                                 size="sm"
-                                className="w-full sm:w-auto hidden sm:inline-flex"
+                                className={cn("w-full sm:w-auto", isMatrix ? "" : "hidden sm:inline-flex")}
                                 onClick={() => navigate("/registration")}
                               >
                                 Testar grátis (10 consultas)
@@ -319,7 +229,7 @@ const HomeCarouselSection: React.FC = () => {
             ))}
           </CarouselContent>
 
-          {/* Setas (desktop/tablet) */}
+          {/* Arrows */}
           <CarouselPrevious
             className="hidden sm:flex left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/70 hover:bg-background/85 border-border/60"
             variant="outline"
