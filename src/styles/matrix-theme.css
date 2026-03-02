@@ -13,7 +13,11 @@
 .matrix-rain-canvas {
   width: 100%;
   height: 100%;
-  opacity: 0.15;
+  opacity: 0.5;
+}
+
+.theme-matrix:not(.dark) .matrix-rain-canvas {
+  opacity: 0.35;
 }
 
 /* Remove all gradient overlays that block the matrix rain */
