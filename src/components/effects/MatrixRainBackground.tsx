@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from 'react';
+import { useTheme } from '../ThemeProvider';
 
 const MatrixRainBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -9,6 +11,8 @@ const MatrixRainBackground: React.FC = () => {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const isDark = theme === 'dark';
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -22,11 +26,15 @@ const MatrixRainBackground: React.FC = () => {
     const columns = Math.floor(canvas.width / fontSize);
     const drops: number[] = Array(columns).fill(1).map(() => Math.random() * -100);
 
+    // Colors based on theme
+    const bgFade = isDark ? 'rgba(0, 3, 0, 0.05)' : 'rgba(245, 245, 245, 0.06)';
+    const mainColor = isDark ? '#00ff41' : '#1a1a1a';
+    const headColor = isDark ? '#ffffff' : '#000000';
+
     const draw = () => {
-      ctx.fillStyle = 'rgba(0, 3, 0, 0.05)';
+      ctx.fillStyle = bgFade;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00ff41';
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
@@ -34,11 +42,15 @@ const MatrixRainBackground: React.FC = () => {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        // Brighter for head of column
         if (Math.random() > 0.95) {
-          ctx.fillStyle = '#ffffff';
+          ctx.fillStyle = headColor;
         } else {
-          ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
+          if (isDark) {
+            ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
+          } else {
+            const alpha = 0.15 + Math.random() * 0.45;
+            ctx.fillStyle = `rgba(30, 30, 30, ${alpha})`;
+          }
         }
 
         ctx.fillText(text, x, y);
@@ -56,7 +68,7 @@ const MatrixRainBackground: React.FC = () => {
       clearInterval(interval);
       window.removeEventListener('resize', resize);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className="matrix-bg-container">
