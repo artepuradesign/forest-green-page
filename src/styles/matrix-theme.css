@@ -61,3 +61,106 @@
 .theme-matrix.dark header.sticky {
   background: hsl(0 0% 7% / 0.95) !important;
 }
+
+/* ===== SIDEBAR: replace purple with green in dark matrix ===== */
+
+/* Sidebar background */
+.theme-matrix.dark .bg-white.dark\:bg-gray-900 {
+  background: hsl(0 0% 5% / 0.92) !important;
+}
+
+/* Active menu items – gradient & text */
+.theme-matrix.dark .text-brand-purple,
+.theme-matrix.dark .dark\:text-purple-300,
+.theme-matrix.dark .dark\:text-purple-400 {
+  color: #00ff41 !important;
+}
+
+/* Active item left bar */
+.theme-matrix.dark .bg-gradient-to-b.from-brand-purple {
+  background: linear-gradient(to bottom, #00ff41, #00cc33) !important;
+}
+
+/* Active item backgrounds */
+.theme-matrix.dark .from-brand-purple\/10,
+.theme-matrix.dark .dark\:from-purple-900\/20 {
+  --tw-gradient-from: rgba(0, 255, 65, 0.1) !important;
+}
+
+/* Active sub-item gradient */
+.theme-matrix.dark .from-brand-purple.to-purple-600 {
+  background: linear-gradient(to right, #00cc33, #00ff41) !important;
+}
+
+/* Sidebar header gradient */
+.theme-matrix.dark .from-brand-purple\/5 {
+  --tw-gradient-from: rgba(0, 255, 65, 0.05) !important;
+}
+
+/* Dashboard active button */
+.theme-matrix.dark .from-brand-purple.to-purple-600.text-white {
+  background: linear-gradient(to right, #00aa2a, #00dd38) !important;
+}
+
+/* Hover states */
+.theme-matrix.dark .hover\:text-brand-purple:hover,
+.theme-matrix.dark .dark\:hover\:text-purple-400:hover {
+  color: #00ff41 !important;
+}
+
+.theme-matrix.dark .hover\:bg-brand-purple\/10:hover,
+.theme-matrix.dark .dark\:hover\:bg-brand-purple\/20:hover {
+  background-color: rgba(0, 255, 65, 0.1) !important;
+}
+
+/* Border accents */
+.theme-matrix.dark .border-brand-purple\/20,
+.theme-matrix.dark .dark\:border-purple-700\/30 {
+  border-color: rgba(0, 255, 65, 0.2) !important;
+}
+
+/* Collapsed submenu portal */
+.theme-matrix.dark [data-submenu] {
+  background: hsl(0 0% 8%) !important;
+  border-color: rgba(0, 255, 65, 0.15) !important;
+}
+
+/* Sidebar toggle button */
+.theme-matrix.dark .text-primary,
+.theme-matrix.dark .dark\:text-primary {
+  color: #00ff41 !important;
+}
+
+.theme-matrix.dark .border-primary\/40,
+.theme-matrix.dark .dark\:border-primary\/50 {
+  border-color: rgba(0, 255, 65, 0.4) !important;
+}
+
+.theme-matrix.dark .hover\:bg-primary:hover {
+  background-color: #00cc33 !important;
+  border-color: #00cc33 !important;
+}
+
+/* ===== LOGO: API white, Painel green in dark matrix ===== */
+.theme-matrix.dark .text-brand-purple.dark\:text-purple-400[class*="animate-logo"] {
+  color: #00ff41 !important;
+}
+
+/* ===== THEME SWITCHER: sun icon green in dark matrix ===== */
+.theme-matrix.dark .text-amber-500,
+.theme-matrix.dark .dark\:text-amber-300 {
+  color: #00ff41 !important;
+}
+
+/* Logo: icon and "API" white, "Painel" green in dark matrix */
+.theme-matrix.dark .matrix-logo-icon {
+  color: #ffffff !important;
+}
+
+.theme-matrix.dark .matrix-logo-api {
+  color: #ffffff !important;
+}
+
+.theme-matrix.dark .matrix-logo-painel {
+  color: #00ff41 !important;
+}
