@@ -5,9 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from '../ThemeProvider';
 import LoadingScreen from '@/components/layout/LoadingScreen';
-import AnimatedBackground from './layout/AnimatedBackground';
-import { useSiteTheme } from '@/contexts/SiteThemeContext';
-import MatrixRainBackground from '@/components/effects/MatrixRainBackground';
+import GlobalAnimatedBackground from '@/components/layout/GlobalAnimatedBackground';
 
 import Sidebar from './layout/Sidebar';
 import MenuSuperior from '../MenuSuperior';
@@ -24,7 +22,6 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }) => {
   const { theme, toggleTheme } = useTheme();
-  const { currentVisualTheme } = useSiteTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
@@ -161,7 +158,7 @@ const DashboardLayout = ({
 
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''} min-h-screen relative`}>
-      {currentVisualTheme === 'matrix' ? <MatrixRainBackground /> : <AnimatedBackground />}
+      <GlobalAnimatedBackground variant="dashboard" />
       
       {/* Notificações de fundo para toasts */}
       <div className="fixed bottom-4 right-4 z-50">

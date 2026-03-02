@@ -26,9 +26,11 @@ const MatrixRainBackground: React.FC = () => {
     const columns = Math.floor(canvas.width / fontSize);
     const drops: number[] = Array(columns).fill(1).map(() => Math.random() * -100);
 
-    // Colors based on theme
-    const bgFade = isDark ? 'rgba(0, 3, 0, 0.05)' : 'rgba(245, 245, 245, 0.06)';
-    const mainColor = isDark ? '#00ff41' : '#1a1a1a';
+    // Dark = classic green on black; Light = dark gray on white
+    const bgFade = isDark ? 'rgba(0, 3, 0, 0.05)' : 'rgba(250, 250, 250, 0.05)';
+    const mainColorFn = isDark
+      ? () => `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`
+      : () => `rgba(40, 40, 40, ${0.15 + Math.random() * 0.35})`;
     const headColor = isDark ? '#ffffff' : '#000000';
 
     const draw = () => {
@@ -45,12 +47,7 @@ const MatrixRainBackground: React.FC = () => {
         if (Math.random() > 0.95) {
           ctx.fillStyle = headColor;
         } else {
-          if (isDark) {
-            ctx.fillStyle = `rgba(0, 255, 65, ${0.3 + Math.random() * 0.7})`;
-          } else {
-            const alpha = 0.15 + Math.random() * 0.45;
-            ctx.fillStyle = `rgba(30, 30, 30, ${alpha})`;
-          }
+          ctx.fillStyle = mainColorFn();
         }
 
         ctx.fillText(text, x, y);
